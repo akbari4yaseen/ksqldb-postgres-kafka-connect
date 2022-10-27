@@ -1,0 +1,17 @@
+curl http://localhost:8083/connectors -i -X POST -H 'Content-Type: application/json' -d '{"name": "lead-sink",
+"config": {"connector.class":"io.confluent.connect.jdbc.JdbcSinkConnector",
+  "tasks.max":"10",
+  "topics": "lead_actors",
+  "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+  "value.converter": "io.confluent.connect.avro.AvroConverter",
+  "value.converter.schema.registry.url": "http://schema-registry:8081",
+  "connection.url": "jdbc:postgresql://postgres:5432/kafka_test?user=postgres&password=postgres",
+  "key.converter.schemas.enable": "false",
+  "value.converter.schemas.enable": "true",
+  "auto.create": "true",
+  "auto.evolve": "true",
+  "insert.mode": "upsert",
+  "pk.fields": "title",
+  "pk.mode": "record_key"
+}
+}'
